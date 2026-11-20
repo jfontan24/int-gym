@@ -4,6 +4,7 @@ import type { Plan } from "../Member.ts";
 
 describe("Member", () => {
   let member: Member;
+  let member2: Member;
 
   beforeEach(() => {
     member = new Member({
@@ -12,6 +13,13 @@ describe("Member", () => {
       plan: "full",
       monthlyFee: 1500,
       discount: 10,
+    });
+    member2 = new Member({
+      name: "Anita Pérez",
+      documentId: "12345679",
+      plan: "full",
+      monthlyFee: 1500,
+      discount: 0,
     });
   });
 
@@ -67,9 +75,16 @@ describe("Member", () => {
     expect(() => (member.monthlyFee = Number.NaN)).toThrow();
   });
 
-  test("show the member as text", () => {
+  test("show the member as text with discount", () => {
     expect(member.toString()).toBe(
       "Ana Pérez (doc. 12345678) - Plan Completo - $1500 - Descuento: 10%",
     );
   });
+
+  test("show the member as text without discount", () => {
+    expect(member2.toString()).toBe(
+      "Anita Pérez (doc. 12345679) - Plan Completo - $1500",
+    );
+  });
+  
 });
